@@ -1,0 +1,62 @@
+﻿@model Labb1_asp.net_CorporateDbLeaveApplication.Models.LeaveApplication
+
+@{
+    ViewData["Title"] = "Create new leave application";
+}
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="login-form mt-lg-5">
+                <h4>Apply for leave</h4>
+                <hr />
+                <form id="createLeaveForm" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <div class="form-floating mt-3">
+                        <input asp-for="StartDate" class="form-control" placeholder="Start date" />
+                        <label asp-for="StartDate">Startdatum</label>
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mt-3">
+                        <input asp-for="EndDate" class="form-control" placeholder="End date" />
+                        <label asp-for="EndDate">Slutdatum</label>
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mt-3">
+                        <select asp-for="TypeOfLeave" class="form-control" placeholder="Type of leave">
+                            <option value="">Select type of leave...</option>
+                            @foreach (var leaveType in Enum.GetValues(typeof(Labb1_asp.net_CorporateDbLeaveApplication.Models.LeaveType)))
+                            {
+                                <option value="@leaveType">@leaveType</option>
+                            }
+                        </select>
+                        <label asp-for="TypeOfLeave">Type of leave</label>
+                        <span asp-validation-for="TypeOfLeave" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn-leave mt-5">Apply</button>
+                </form>
+            </div>
+            <div class="mt-md-5">
+                <a class="text-decoration-none text-black-50" asp-action="Index">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                    </svg> Gå till mina ansökningar
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 mt-lg-5">
+            <img src="/img/create.jpg" class="img-fluid float-md-end" alt="Create form" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

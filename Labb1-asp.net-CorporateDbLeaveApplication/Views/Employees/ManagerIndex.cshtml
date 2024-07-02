@@ -1,0 +1,178 @@
+﻿@model IEnumerable<Labb1_asp.net_CorporateDbLeaveApplication.Models.ViewModels.LeaveApplicationViewModel>
+
+@{
+    ViewData["Title"] = "Leave requests";
+}
+
+<div class="container mt-3">
+    <h2 class="text-left mb-4">Manage leave requests</h2>
+
+    <!-- All applications -->
+    <div class="row mt-5" style="border-top: 1px solid ##343a40">
+        <div class="col-2">
+            <button class="btn-leave w-auto mb-2 p-3" data-bs-toggle="collapse" href="#collapseMonth" role="button" aria-expanded="false" aria-controls="collapseMonth">
+                Last month
+                <i id="collapseIconMonth" class="fas fa-chevron-down"></i> <!-- Default icon when collapsed -->
+            </button>
+        </div>
+
+        <div class="col-2">
+            <button class="btn-leave w-auto mb-2 p-3" data-bs-toggle="collapse" href="#collapseAll" role="button" aria-expanded="false" aria-controls="collapseAll">
+                All requests
+                <i id="collapseIconAll" class="fas fa-chevron-down"></i> <!-- Default icon when collapsed -->
+            </button>
+        </div>
+    </div>
+
+    <!-- Collaps for applications received in the last month -->
+    <div class="collapse mb-3" id="collapseMonth">
+        <div class="card card-body mt-3">
+            @Html.Partial("_LastMonth", Model)
+        </div>
+    </div>
+
+    <!-- Collaps for all previous applications -->
+    <div class="collapse" id="collapseAll">
+        <div class="card card-body mt-3">
+            <h4 class="card-title">All applications</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th colspan="2">Employee</th>
+                            <th>
+                                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" class="text-dark">
+                                    Application submission date
+                                    @if (ViewData["DateSortParm"] != null && ViewData["DateSortParm"].ToString() == "date_desc")
+                                    {
+                                        <i class="fas fa-sort-down ml-1"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-sort-up ml-1"></i>
+                                    }
+                                </a>
+                            </th>
+                            <th>Type of leave</th>
+                            <th>Period</th>
+                            <th>Application status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.employee.FirstName) @Html.DisplayFor(modelItem => item.employee.LastName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicationSubmissionDate.Date)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TypeOfLeave)</td>
+                                <td>@($"{item.StartDate} - {item.EndDate}")</td>
+                                @if (item.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Approved)
+                                {
+                                    <td style="font-weight: bold; color:#597D35;">
+                                        @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                                    </td>
+                                }
+                                else if (item.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Denied)
+                                {
+                                    <td style="font-weight: bold; color:#A21A00;">
+                                        @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                                    </td>
+                                }
+                                else if (item.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Pending)
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                                    </td>
+                                }
+                                <td>
+                                    <div class="btn" role="group">
+                                        <a asp-action="Details" asp-route-id="@item.LeaveApplicationId" class="btn btn-outline-info btn-sm">Details</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unprocessed applications -->
+    <div class="row mt-3">
+        <div class="col-4">
+            <button class="btn-leave w-auto mb-2 p-3" data-bs-toggle="collapse" href="#collapseNew" role="button" aria-expanded="true" aria-controls="collapseNew">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
+                </svg>  Unprocessed applications
+                <i id="collapseIconAll" class="fas fa-chevron-down p-3"></i> <!-- Default icon when collapsed -->
+            </button>
+        </div>
+    </div>
+
+    <!-- Collaps for nprocessed applications, open as default -->
+    <div class="collapse show" id="collapseNew">
+        <div class="card card-body mt-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th colspan="2">Employee</th>
+                            <th>Application submission date</th>
+                            <th>Type of leave</th>
+                            <th>Period</th>
+                            <th>Application status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Where(m => m.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Pending))
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.employee.FirstName) @Html.DisplayFor(modelItem => item.employee.LastName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicationSubmissionDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TypeOfLeave)</td>
+                                <td>@($"{item.StartDate} - {item.EndDate}")</td>
+                                <td>@Html.DisplayFor(modelItem => item.ApplicationStatus)</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.LeaveApplicationId" class="btn btn-outline-warning btn-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                                            </svg> Edit
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.LeaveApplicationId" class="btn btn-outline-info btn-sm">Details</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get all collapse buttons
+        var collapseButtons = document.querySelectorAll('[data-bs-toggle="collapse"]');
+
+        collapseButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var collapseIcon = button.querySelector('i');
+                if (button.getAttribute('aria-expanded') === 'true') {
+                    // Collapse is open, switch to open icon
+                    collapseIcon.classList.remove('fa-chevron-down');
+                    collapseIcon.classList.add('fa-chevron-up');
+                } else {
+                    // Collapse is closed, revert to closed icon
+                    collapseIcon.classList.remove('fa-chevron-up');
+                    collapseIcon.classList.add('fa-chevron-down');
+                }
+            });
+        });
+    });
+</script>

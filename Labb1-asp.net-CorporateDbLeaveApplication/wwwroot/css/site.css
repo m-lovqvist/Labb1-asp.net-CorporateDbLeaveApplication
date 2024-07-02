@@ -1,0 +1,199 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/* Global style */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    width: 100vw;
+    height: 100vh;
+    background-color: #e6f7ff;
+}
+
+.container {
+    padding: 5rem;
+    background-color: #fff;
+    box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Navbar style */
+
+.navbar-up {
+    background-color: #fff;
+    padding-bottom: 3rem;
+}
+
+.navbar-outer {
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.2); /* Shade adjusted to be prominent */
+}
+
+.navbar-inner {
+    width: 70%;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-link {
+    font-size: medium;
+    color: #333;
+    font-weight: 300;
+    transition: color 0.3s, font-weight 0.3s;
+}
+
+    .nav-link:hover {
+        color: #333;
+        font-weight: 600;
+    }
+
+.btn-leave .navbar-nav .nav-link:hover {
+    color: #333;
+    font-weight: 300;
+}
+
+
+.navbar-toggler-icon {
+    color: #333;
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+
+.navbar-tight {
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.navbar-down {
+    margin-top: -1px;
+    color: #fff;
+}
+
+.navbar-nav-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-leave {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+}
+
+.create-form {
+    max-width: 600px;
+    margin: auto;
+}
+
+.home-page {
+    background-image: url('../img/home-page.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: calc(100vw - 4rem); /* Width adjusted to include margins */
+    height: 75vh; /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Buttons */
+button {
+    display: flex;
+    height: 3em;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none;
+    background: #fff;
+}
+
+    button > svg {
+        margin-right: 5px;
+        margin-left: 5px;
+        font-size: 20px;
+        transition: all 0.4s ease-in;
+    }
+
+    button:hover > svg {
+        font-size: 1.2em;
+        transform: translateX(-5px);
+    }
+
+    button:hover {
+        box-shadow: 5px 5px 11px #d1d1d1, -5px -5px 11px #d1d1d1;
+        transform: translateY(-1px);
+    }
+
+.btn-leave {
+    display: flex;
+    height: 3em;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: 1px solid #343a40;
+}
+
+    .btn-leave > svg {
+        margin-right: 5px;
+        margin-left: 5px;
+        font-size: 20px;
+        transition: all 0.4s ease-in;
+    }
+
+    .btn-leave:hover > svg {
+        font-size: 1.2em;
+        transform: translateX(-1px);
+    }
+
+    .btn-leave:hover {
+        box-shadow: 3px 3px 9px #d1d1d1, -3px -3px 9px #ffffff;
+        transform: translateY(-1px);
+    }
+
+.create-form {
+    background-color: #fff;
+    border-radius: 5px;
+}

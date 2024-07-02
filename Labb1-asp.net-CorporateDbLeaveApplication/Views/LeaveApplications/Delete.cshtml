@@ -1,0 +1,65 @@
+﻿@model Labb1_asp.net_CorporateDbLeaveApplication.Models.LeaveApplication
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Radera</h2>
+    <hr />
+
+    <h3>Are you sure you want to delete the following?</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                Start date
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dt class="col-sm-3">
+                End date
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.EndDate)
+            </dd>
+            <dt class="col-sm-3">
+                Type of leave
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.TypeOfLeave)
+            </dd>
+            <dt class="col-sm-3">
+                Application submission date
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.ApplicationSubmissionDate)
+            </dd>
+            <dt class="col-sm-3">
+                Application status
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.ApplicationStatus)
+            </dd>
+        </dl>
+
+        <form asp-action="DeleteConfirmed">
+            <input type="hidden" asp-for="LeaveApplicationId" />
+            <input type="submit" value="Radera" class="btn btn-danger" />
+
+        </form>
+        <div class="mt-md-5">
+            <a class="text-decoration-none text-black-50" asp-action="Index">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+                </svg> Back to list
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

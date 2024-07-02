@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Labb1_asp.net_CorporateDbLeaveApplication.Models.ViewModels.LeaveApplicationViewModel>
+
+@{
+    ViewData["Title"] = "Leave requests";
+}
+
+    <h4 class="card-title">Applications received in the last month</h4>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <th colspan="2">Employee</th>
+                    }
+                    <th>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" class="text-dark">
+                            Ansökningsdatum
+                            @if (ViewData["DateSortParm"] != null && ViewData["DateSortParm"].ToString() == "date_desc")
+                            {
+                                <i class="fas fa-sort-down ml-1"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-sort-up ml-1"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>Type of leave</th>
+                    <th>Period</th>
+                    <th>Application status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @if (User.IsInRole("Manager"))
+                            @if (User.IsInRole("Manager"))
+                            {
+                                <td>@Html.DisplayFor(modelItem => item.EmployeeId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.employee.FirstName) @Html.DisplayFor(modelItem => item.employee.LastName)</td>
+                            }
+                        <td>@Html.DisplayFor(modelItem => item.ApplicationSubmissionDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TypeOfLeave)</td>
+                        <td>@($"{item.StartDate} - {item.EndDate}")</td>
+                    @if (item.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Approved)
+                    {
+                        <td style="font-weight: bold; color:#597D35;">
+                            @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                        </td>
+                    }
+                    else if (item.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Denied)
+                    {
+                        <td style="font-weight: bold; color:#A21A00;">
+                            @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                        </td>
+                    }
+                    else if (item.ApplicationStatus == Labb1_asp.net_CorporateDbLeaveApplication.Models.ApplicationStatus.Pending)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ApplicationStatus)
+                        </td>
+                    }
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@item.LeaveApplicationId" class="btn btn-outline-info btn-sm">Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+  
